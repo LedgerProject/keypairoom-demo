@@ -1,0 +1,128 @@
+extends base.pug 
+
+block content
+    - var data = data || {}
+    - var safetyQuestions = safetyQuestions || {}
+    - var savedPBKDF = savedPBKDF || ""
+    - var savedPublicKey = savedPublicKey || ""
+    - var verifyAnswersResults = verifyAnswersResults || ""
+
+    div(class="container")
+        form(action="/homepage")
+            div(class="row")
+                div(class="col")
+                    input(
+                        type="submit"
+                        value="Back to Homepage"
+                        class="btn btn-lg btn-secondary btn-block"
+                    )
+        br
+        h1(style="text-align:center") RECOVER KEYPAIR
+        if verifyAnswersResults !== 'keypair-not-generated'
+            form(action="/recover-keypair", method="post")
+                div(class="mb-3")
+                    label(for="email" class="form-label") Email:
+                    input(
+                        type="email",
+                        id="email",
+                        name="email",
+                        class="form-control",
+                        value=data.email
+                    )
+
+                div(class="mb-3")
+                    label(for="question1") #{safetyQuestions.question1}
+                    input(
+                        type="text",
+                        id="question1",
+                        name="question1",
+                        class="form-control",
+                        value=data.question1
+                    )
+
+                div(class="mb-3")
+                    label(for="question2") #{safetyQuestions.question2}
+                    input(
+                        type="text",
+                        id="question2",
+                        name="question2",
+                        class="form-control",
+                        value=data.question2
+                    )
+
+                div(class="mb-3")
+                    label(for="question3") #{safetyQuestions.question3}
+                    input(
+                        type="text",
+                        id="question3",
+                        name="question3",
+                        class="form-control",
+                        value=data.question3
+                    )
+
+                div(class="mb-3")
+                    label(for="question4") #{safetyQuestions.question4}
+                    input(
+                        type="text",
+                        id="question4",
+                        name="question4",
+                        class="form-control",
+                        value=data.question4
+                    )
+
+                div(class="mb-3")
+                    label(for="question5") #{safetyQuestions.question5}
+                    input(
+                        type="text",
+                        id="question5",
+                        name="question5",
+                        class="form-control",
+                        value=data.question5
+                    )
+
+                input(
+                    type="hidden",
+                    id="formSent",
+                    name="formSent",
+                    value=1
+                )
+
+                if verifyAnswersResults === 'keypair-not-generated'
+                    div(class="p-3 mb-2 bg-warning text-dark") Please, generate before the kaypair in the 'Generate Keypair' page
+                if verifyAnswersResults === 'answers-match'
+                    div(class="p-3 mb-2 bg-success text-white") ANSWERS ARE CORRECT!
+                if verifyAnswersResults === 'answers-not-match'
+                    div(class="p-3 mb-2 bg-danger text-white") ANSWERS ARE NOT CORRECT!
+
+                if errors
+                    div(class="p-3 mb-2 bg-warning text-dark") #{errors}
+
+                div(class="row")
+                    div(class="col")
+                        input(
+                            type="submit"
+                            value="Check Answers"
+                            class="btn btn-lg btn-primary btn-block"
+                        )
+                hr
+                div(class="mb-3")
+                    label(for="savedPBKDF" class="form-label") Saved PBKDF:
+                    input(
+                        type="savedPBKDF",
+                        id="savedPBKDF",
+                        name="savedPBKDF",
+                        class="form-control",
+                        readonly,
+                        value=savedPBKDF
+                    )
+
+                div(class="mb-3")
+                    label(for="savedPublicKey" class="form-label") Saved Public Key:
+                    input(
+                        type="savedPublicKey",
+                        id="savedPublicKey",
+                        name="savedPublicKey",
+                        class="form-control",
+                        readonly,
+                        value=savedPublicKey
+                    )

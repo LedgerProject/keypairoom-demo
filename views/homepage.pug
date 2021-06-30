@@ -1,0 +1,21 @@
+extends base.pug 
+
+block content
+    div(class="container")
+        h1(style="text-align:center") KEYPAIROOM - DEMO
+
+        div(class="row")
+            div(class="col")
+                form(action="/generate-keypair", method="post")
+                    input(
+                        type="submit"
+                        value="Generate Keypair"
+                        class="btn btn-lg btn-primary btn-block"
+                    )   
+            div(class="col")
+                form(action="/recover-keypair", method="post")
+                    input(
+                        type="submit"
+                        value="Recover Keypair"
+                        class="btn btn-lg btn-secondary btn-block"
+                    )

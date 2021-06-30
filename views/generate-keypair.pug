@@ -1,0 +1,146 @@
+extends base.pug 
+
+block content
+    - var data = data || {}
+    - var safetyQuestions = safetyQuestions || {}
+    - var errors = errors || ""
+    - var pbkdf = pbkdf || {}
+    - var keypair = keypair || {}
+    - var publicKey = publicKey || ""
+    - var privateKey = privateKey || ""
+
+    div(class="container")
+        form(action="/homepage")
+            div(class="row")
+                div(class="col")
+                    input(
+                        type="submit"
+                        value="Back to Homepage"
+                        class="btn btn-lg btn-secondary btn-block"
+                    )
+        br
+        h1(style="text-align:center") GENERATE KEYPAIR
+        form(action="/generate-keypair", method="post")
+            div(class="mb-3")
+                label(for="email" class="form-label") Email:
+                input(
+                    type="email",
+                    id="email",
+                    name="email",
+                    class="form-control",
+                    value=data.email
+                )
+            //-
+                div(class="mb-3")
+                    label(for="password" class="form-label") Password:
+                    input(
+                        type="password",
+                        id="password",
+                        name="password",
+                        class="form-control",
+                        value=data.password
+                    )
+
+            div(class="mb-3")
+                label(for="question1") #{safetyQuestions.question1}
+                input(
+                    type="text",
+                    id="question1",
+                    name="question1",
+                    class="form-control",
+                    value=data.question1
+                )
+
+            div(class="mb-3")
+                label(for="question2") #{safetyQuestions.question2}
+                input(
+                    type="text",
+                    id="question2",
+                    name="question2",
+                    class="form-control",
+                    value=data.question2
+                )
+
+            div(class="mb-3")
+                label(for="question3") #{safetyQuestions.question3}
+                input(
+                    type="text",
+                    id="question3",
+                    name="question3",
+                    class="form-control",
+                    value=data.question3
+                )
+
+            div(class="mb-3")
+                label(for="question4") #{safetyQuestions.question4}
+                input(
+                    type="text",
+                    id="question4",
+                    name="question4",
+                    class="form-control",
+                    value=data.question4
+                )
+
+            div(class="mb-3")
+                label(for="question5") #{safetyQuestions.question5}
+                input(
+                    type="text",
+                    id="question5",
+                    name="question5",
+                    class="form-control",
+                    value=data.question5
+                )
+
+            input(
+                type="hidden",
+                id="formSent",
+                name="formSent",
+                value=1
+            )
+            
+            if errors
+                div(class="p-3 mb-2 bg-warning text-dark") #{errors}
+
+            div(class="row")
+                div(class="col")
+                    input(
+                        type="submit"
+                        value="Generate Keypair"
+                        class="btn btn-lg btn-primary btn-block"
+                    )
+        hr
+        div(class="mb-3")
+            label(for="pbkdf" class="form-label") PBKDF:
+            input(
+                type="pbkdf",
+                id="pbkdf",
+                name="pbkdf",
+                class="form-control",
+                readonly,
+                value=pbkdf.key_derivation
+            )
+            if pbkdf.key_derivation
+                div(class="form-text") #{JSON.stringify(pbkdf)}
+        hr
+        div(class="mb-3")
+            label(for="publicKey" class="form-label") Public Key:
+            input(
+                type="publicKey",
+                id="publicKey",
+                name="publicKey",
+                class="form-control",
+                readonly,
+                value=publicKey
+            )
+        div(class="mb-3")
+            label(for="privateKey" class="form-label") Private Key:
+            input(
+                type="privateKey",
+                id="privateKey",
+                name="privateKey",
+                class="form-control",
+                readonly,
+                value=privateKey
+            )
+            if keypair.user
+                div(class="form-text") #{JSON.stringify(keypair)}
